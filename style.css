@@ -1,0 +1,94 @@
+
+.main {
+    -webkit-perspective: 350px; /* Safari 4-8  */
+    perspective: 350px;
+}
+
+.container {
+    border-left: 2px solid rgb(122, 138, 166);
+    border-right: 2px solid rgb(122, 138, 166);
+    margin: 0 auto;
+    width: 300px;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 5px solid  rgb(122, 138, 166);
+    
+
+    -webkit-transform-style: preserve-3d; /* Safari 3-8  */    
+    -webkit-transform: rotateX(45deg); /* Safari 3-8  */
+    transform-style: preserve-3d;
+    transform: rotateX(45deg);
+}
+
+.container.perfect {
+    border-bottom: 5px solid  rgb(14, 255, 74);
+    
+}
+.container.cool {
+    border-bottom: 5px solid  rgb(39, 133, 255);
+}
+
+.container.bad {
+    border-bottom: 5px solid  rgb(255, 0, 0);
+}
+.container.miss {
+    border-bottom: 5px solid  rgb(172, 82, 82);
+    
+}
+
+.colonne {
+    border-left: 1px solid rgb(122, 138, 166);
+    border-right: 1px solid rgb(122, 138, 166);
+    width: 25%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.commands_letter {
+    font-size: 9px;
+    font-family: "Arial";
+    bottom: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid rgb(83, 153, 182);
+    border-radius: 30px;
+    padding: 5px 10px;
+    color: rgb(83, 153, 182);
+}
+
+.commands_letter.active {
+    color: rgb(64, 233, 64);
+    border: 1px solid rgb(64, 233, 64);
+    
+}
+
+.colonne_sequence {
+    width: 40px;
+    height: 100%;
+    position: relative;
+    bottom:5px;
+    left:50%;
+    transform: translateX(-50%);
+    
+}
+
+.note {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 2px solid red;
+    border-radius: 30px;
+    left:50%;
+    transform: translateX(-50%);    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
