@@ -1,39 +1,15 @@
-
-function sequenceGeneration() {
-    var time = 0;
-    sequence = []
-    while (sequence.length < 1000) {
-        var letter = {
-            A: false,
-            Z: false,
-            E: false,
-            R: false
-        }
-
-        var count = 0
-        for (var key in letter) {
-            if (Math.random() < 0.3) {
-                letter[key] = true
-                count++
-            }
-        }
-
-        if (count !== 0) {
-            time += Math.floor(Math.random() * 500 + 1000)
-
-
-            sequence.push({
-                timing: time,
-                letter: letter
-            })
-        }
-    }
+var sequence = []
+var TT = 10
+function reinit(){
+    sequence=[]
+    sequenceCopy.forEach(element =>
+        sequence.push(element)
+    )
 }
-
-sequenceGeneration();
 ////
 
 var gameElement = {
+    player: document.querySelector('.gamePlayer'),
     colonne: document.querySelectorAll(".colonne_sequence"),
     letter: document.querySelectorAll(".commands_letter"),
     container: document.querySelector('.container'),
@@ -96,28 +72,33 @@ window.addEventListener('keydown', function (event) {
 
 function startStop() {
     if (game.state === false) {
+        reinit();
         game.state = true;
         gameElement.button.textContent = "STOP"
+        gameElement.player.play();
         clearInterval(interval);
         interval = setInterval(function () {
-            game.time += 10;
-            if (sequence.length > 0 && sequence[0].timing - game.time < 200) {
-                noteShow();
+            game.time += TT;
+            for(var i=0; i<50 ;i++) {
+                if (sequence.length > 0 && sequence[i] && sequence[i].timing - game.time < 10000) {
+                    noteShow(sequence[i].timing - game.time);
+                }
             }
             clear();
             timePass();
             render();
             purge();
-
-        }, 5);
+        }, TT);
     } else if (game.state === true) {
         gameElement.button.textContent = "Start"
+        gameElement.player.pause();
+        gameElement.player.currentTime = 0;
+
         game.state = false;
         clearInterval(interval);
         clear();
-        game.time=0;
-        game.note= []
-        sequenceGeneration();
+        game.time = 0;
+        game.note = []
     }
 }
 
@@ -146,9 +127,9 @@ window.addEventListener('keyup', function (event) {
 })
 
 
-function noteShow() {
+function noteShow(timeLeft) {
     game.note.push({
-        timeLeft: 200,
+        timeLeft: timeLeft,
         letter: sequence[0].letter
     });
     sequence.splice(0, 1);
@@ -157,7 +138,7 @@ function noteShow() {
 function timePass() {
     if (game.note.length > 0) {
         for (var i = 0; i < game.note.length; i++) {
-            game.note[i].timeLeft -= 0.5;
+            game.note[i].timeLeft -= TT;
         }
     }
 }
@@ -171,7 +152,7 @@ function render() {
                 if (game.note[i].letter[key] === true) {
                     var newP = document.createElement('p');
                     newP.classList.add('note');
-                    newP.style.bottom = game.note[i].timeLeft / 2 + "%";
+                    newP.style.bottom = game.note[i].timeLeft /10 + "%";
                     gameElement.colonne[j].appendChild(newP);
                 }
                 j++;
@@ -189,27 +170,28 @@ function clear() {
 
 //supprime les notes non validée
 function purge() {
-    if (game.note.length > 0 && game.note[0].timeLeft < -8) {
-        game.note.splice(0, 1);
+    for(var i=0; i<10; i++) {
+    if (game.note.length > 0 && game.note[i] && game.note[i].timeLeft < -100) {
+        game.note.splice(i, 1);
         console.log('miss!');
         gameElement.container.classList.remove("perfect");
         gameElement.container.classList.remove("cool");
         gameElement.container.classList.remove("bad");
         barChange("miss")
-
+    }
     }
 }
 
 
 function inputCheck() {
-    if (game.note.length > 0 && game.note[0].timeLeft < 15) {
+    if (game.note.length > 0 && game.note[0].timeLeft < 200) {
         var check = 0;
         for (var key in game.note[0].letter) {
             if (game.note[0].letter[key] === game.input[key]) {
                 check++;
             }
         }
-        if (check === 4 & (game.note[0].timeLeft < 2) && (game.note[0].timeLeft > -2)) {
+        if (check === 4 & (game.note[0].timeLeft < 50) && (game.note[0].timeLeft > -20)) {
             console.log('perfect!!');
             gameElement.container.classList.remove("cool");
             gameElement.container.classList.remove("bad");
@@ -217,7 +199,7 @@ function inputCheck() {
             barChange("perfect")
 
 
-        } else if (check === 4 & (game.note[0].timeLeft < 5) && (game.note[0].timeLeft > -5)) {
+        } else if (check === 4 & (game.note[0].timeLeft < 100) && (game.note[0].timeLeft > -100)) {
             console.log('cool!!');
             gameElement.container.classList.remove("perfect");
             gameElement.container.classList.remove("bad");
