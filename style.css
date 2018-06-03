@@ -92,3 +92,16 @@ body {
     flex-direction: column;
     align-items: center
 }
+
+.result {
+    position: fixed;
+    bottom:50px;
+    font-size: 30px;
+    display: flex;
+justify-content: center;
+
+}
+
+.result p {
+    margin-right:40px;
+}
