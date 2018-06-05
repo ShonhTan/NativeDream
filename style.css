@@ -1,31 +1,34 @@
+body{
+    overflow: hidden;
+}
 
 .main {
-    -webkit-perspective: 350px; /* Safari 4-8  */
-    perspective: 350px;
+    -webkit-perspective: 310px; /* Safari 4-8  */
+    perspective: 300px;
+    transform: scale(0.25) translateY(-700px);
 }
 
 .container {
-    border-left: 2px solid rgb(122, 138, 166);
-    border-right: 2px solid rgb(122, 138, 166);
+    border-right: 5px solid rgb(122, 138, 166);
+    border-left: 5px solid rgb(122, 138, 166);
     margin: 0 auto;
-    width: 300px;
-    height: 60vh;
+    width: 1000px;
+    height: 1000px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 5px solid  rgb(122, 138, 166);
-    
-
-    -webkit-transform-style: preserve-3d; /* Safari 3-8  */    
-    -webkit-transform: rotateX(45deg); /* Safari 3-8  */
+    border-bottom: 5px solid rgb(122, 138, 166);
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: rotateX(45deg);
     transform-style: preserve-3d;
-    transform: rotateX(45deg);
+    transform: rotateX(15deg) translateY(30px) translateZ(50px);
 }
+
 
 .container.perfect {
-    border-bottom: 5px solid  rgb(14, 255, 74);
-    
+    border-bottom: 5px solid  rgb(14, 255, 74);   
 }
+
 .container.cool {
     border-bottom: 5px solid  rgb(39, 133, 255);
 }
@@ -39,8 +42,8 @@
 }
 
 .colonne {
-    border-left: 1px solid rgb(122, 138, 166);
-    border-right: 1px solid rgb(122, 138, 166);
+    border-left: 3px solid rgb(122, 138, 166);
+    border-right: 3px solid rgb(122, 138, 166);
     width: 25%;
     height: 100%;
     position: relative;
@@ -49,26 +52,26 @@
 }
 
 .commands_letter {
-    font-size: 9px;
+    font-size: 30px;
     font-family: "Arial";
     bottom: 5px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    border: 1px solid rgb(83, 153, 182);
+    border: 2px solid rgba(46, 105, 207, 0.322);
     border-radius: 30px;
-    padding: 5px 10px;
-    color: rgb(83, 153, 182);
+    padding: 5px 20px;
+    color: rgba(46, 105, 207, 0.322);
 }
 
 .commands_letter.active {
-    color: rgb(64, 233, 64);
-    border: 1px solid rgb(64, 233, 64);
+    color: rgb(46, 105, 207);
+    border: 2px solid rgb(46, 105, 207);
     
 }
 
 .colonne_sequence {
-    width: 40px;
+    width: 100%;
     height: 100%;
     position: relative;
     bottom:5px;
@@ -78,11 +81,12 @@
 }
 
 .note {
-    width: 20px;
+    width: 80px;
     height: 20px;
     position: absolute;
-    border: 2px solid red;
-    border-radius: 30px;
+    border: 5px solid rgb(18, 36, 73);
+    background: rgb(174, 201, 255);
+    border-radius: 100%;
     left:50%;
     transform: translateX(-50%);    
 }
@@ -104,4 +108,35 @@ justify-content: center;
 
 .result p {
     margin-right:40px;
+}
+
+.success {
+    position: fixed;
+    top:150px;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    text-transform: uppercase;
+    opacity: 0;
+}
+
+.success.perfect {
+    color: rgb(14, 255, 74);  
+    opacity: 1;
+     
+}
+
+.success.cool {
+    color: rgb(39, 133, 255);
+    opacity: 1;
+}
+
+.success.bad {
+    color: rgb(255, 0, 0);
+    opacity: 1;
+}
+.success.miss {
+    color: rgb(172, 82, 82);
+    opacity: 1;
+    
 }

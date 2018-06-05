@@ -1,5 +1,5 @@
 var sequence = []
-var TT = 10
+var TT = 5
 
 function reinit(){
     sequence=[]
@@ -19,6 +19,7 @@ function reinit(){
 
 //element de la page
 var gameElement = {
+    success:document.querySelector('.success'),
     player: document.querySelector('.gamePlayer'),
     colonne: document.querySelectorAll(".colonne_sequence"),
     letter: document.querySelectorAll(".commands_letter"),
@@ -119,7 +120,7 @@ function startStop() {
         interval = setInterval(function () {
             game.time += TT;
             for(var i=0; i<10 ;i++) {
-                if (sequence.length > 0 && sequence[i] && sequence[i].timing - game.time < 2000) {
+                if (sequence.length > 0 && sequence[i] && sequence[i].timing - game.time < 1500) {
                     noteShow(sequence[i].timing - game.time);
                     
                 }
@@ -145,7 +146,6 @@ function startStop() {
 
 //push les notes de la sequence vers le tableau des notes à afficher dans les colonnes
 function noteShow(timeLeft) {
-    console.log(timeLeft);
 
     game.note.push({
         timeLeft: timeLeft,
@@ -172,7 +172,7 @@ function render() {
                 if (game.note[i].letter[key] === true) {
                     var newP = document.createElement('p');
                     newP.classList.add('note');
-                    newP.style.bottom = game.note[i].timeLeft /20 + "%";
+                    newP.style.bottom = game.note[i].timeLeft /10 + "%";
                     gameElement.colonne[j].appendChild(newP);
                 }
                 j++;
@@ -194,7 +194,6 @@ function purge() {
     for(var i=0; i<10; i++) {
     if (game.note.length > 0 && game.note[i] && game.note[i].timeLeft < -100) {
         game.note.splice(i, 1);
-        console.log('miss!');
         gameElement.container.classList.remove("perfect");
         gameElement.container.classList.remove("cool");
         gameElement.container.classList.remove("bad");
@@ -216,27 +215,34 @@ function inputCheck() {
             }
         }
         if (check === 4 & (game.note[0].timeLeft < 50) && (game.note[0].timeLeft > -20)) {
-            console.log('perfect!!');
             gameElement.container.classList.remove("cool");
             gameElement.container.classList.remove("bad");
             gameElement.container.classList.remove("miss");
+            gameElement.success.classList.remove("cool");
+            gameElement.success.classList.remove("bad");
+            gameElement.success.classList.remove("miss");
             barChange("perfect")
             game.result.perfect++
 
         } else if (check === 4 & (game.note[0].timeLeft < 100) && (game.note[0].timeLeft > -100)) {
-            console.log('cool!!');
             gameElement.container.classList.remove("perfect");
             gameElement.container.classList.remove("bad");
             gameElement.container.classList.remove("miss");
+            gameElement.success.classList.remove("perfect");
+            gameElement.success.classList.remove("bad");
+            gameElement.success.classList.remove("miss");
             barChange("cool")
             game.result.cool++
 
 
         } else {
-            console.log('bad!');
+            
             gameElement.container.classList.remove("perfect");
             gameElement.container.classList.remove("cool");
             gameElement.container.classList.remove("miss");
+            gameElement.success.classList.remove("perfect");
+            gameElement.success.classList.remove("cool");
+            gameElement.success.classList.remove("miss");
             barChange("bad")
             game.result.bad++
 
@@ -249,8 +255,13 @@ function inputCheck() {
 
 function barChange(myClass) {
     gameElement.container.classList.add(myClass);
+    gameElement.success.classList.add(myClass);    
+    gameElement.success.textContent=myClass;
+    
     clearTimeout(barTimeOut);
     barTimeOut = setTimeout(function () {
+        // gameElement.success.textContent=""
+        gameElement.success.classList.remove(myClass);
         gameElement.container.classList.remove(myClass);
     }, 400)
 }
